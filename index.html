@@ -1,40 +1,20 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Topo Game</title>
-    <link rel="stylesheet" href="./style.css" />
-    <link rel="shortcut icon" href="Img/TOPO.png" type="image/x-icon" />
+    <link
+      rel="icon"
+      type="image/svg+xml"
+      href="/topo.png" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0" />
+    <title>Mole Game!</title>
   </head>
   <body>
-    <div class="main-container">
-      <h1 id="puntos"></h1>
-      <div class="envuelve-el-juego">
-        <div class="casilla topo"></div>
-        <div class="casilla"></div>
-        <div class="casilla"></div>
-        <div class="casilla"></div>
-        <div class="casilla"></div>
-        <div class="casilla"></div>
-        <div class="casilla"></div>
-        <div class="casilla"></div>
-        <div class="casilla"></div>
-      </div>
-      <form method="dialog" class="inputs">
-        <input
-          type="number"
-          name=""
-          id="Velocidad"
-          min="0"
-          max="130"
-          value="130"
-        />
-      </form>
-      <br />
-      <p>Baja el numero para subir la dificultad</p>
-    </div>
-    <script src="./main.js"></script>
+    <div id="root"></div>
+    <script
+      type="module"
+      src="/src/main.tsx"></script>
   </body>
 </html>
