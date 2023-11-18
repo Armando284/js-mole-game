@@ -35,13 +35,14 @@
 
 .mole {
   background: url(/topo.png);
-  /* aquí lo que debería ir es la imagen del topo con sus dimensiones y todo*/
 }
 
-#Velocidad {
-  width: 70px;
-  height: 30px;
-  border-radius: 0;
-  border: 1px solid black;
-  text-align: center;
+.button-group,
+.input-group {
+  width: 100%;
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
 }

@@ -3,11 +3,13 @@ import './App.css'
 
 const BOXES = 9
 const GAME_BASE_SPEED = 1500
+type GameState = 'stop' | 'play' | 'pause'
+const lastBox = () => BOXES - 1
 
 function App() {
   const [points, setPoints] = useState(0)
-  const [moleBox, setMoleBox] = useState(0)
-  const [isActive, setIsActive] = useState(false)
+  const [moleBox, setMoleBox] = useState(lastBox())
+  const [currentState, setCurrentState] = useState<GameState>('stop')
   const [difficulty, setDifficulty] = useState(0)
   const [fps, setFPS] = useState(GAME_BASE_SPEED)
 
@@ -15,7 +17,7 @@ function App() {
 
   const hit = (e: React.MouseEvent<HTMLDivElement>): void => {
     const el = e.target as HTMLDivElement
-    if (isActive && el.classList.contains('mole')) {
+    if (currentState === 'play' && el.classList.contains('mole')) {
       setMoleBox(-1) // Push the mole out of grid
       setPoints(points + 1)
     }
@@ -23,7 +25,7 @@ function App() {
 
   useEffect(() => {
     let intervalId: number | undefined
-    if (isActive) {
+    if (currentState === 'play') {
       intervalId = setInterval(() => {
         const boxNumber = Math.floor(Math.random() * 9)
         setMoleBox(boxNumber)
@@ -33,10 +35,18 @@ function App() {
     return () => {
       clearInterval(intervalId)
     }
-  }, [isActive, fps])
+  }, [currentState, fps])
 
   const handlePlay = () => {
-    setIsActive(!isActive)
+    if (currentState === 'stop') {
+      setPoints(0)
+    }
+    setCurrentState(currentState === 'play' ? 'pause' : 'play')
+  }
+
+  const handleStop = () => {
+    setCurrentState('stop')
+    setMoleBox(lastBox())
   }
 
   const getFps = (value: number) => Math.floor(GAME_BASE_SPEED / value)
@@ -62,8 +72,10 @@ function App() {
             boxArray.map((id, i) => (<div key={id} className={`box ${moleBox === i ? 'mole' : ''}`} onClick={hit}></div>))
           }
         </div>
-        <button onClick={handlePlay}>{isActive ? 'Stop' : 'Play'}</button>
-
+        <div className="button-group">
+          <button onClick={handlePlay}>{currentState === 'play' ? 'Pause' : 'Play'}</button>
+          <button onClick={handleStop} disabled={currentState === 'stop'}>Stop</button>
+        </div>
         <div className="input-group">
           <label htmlFor="difficulty">Difficulty {difficulty}
             <input type="range" min="1" max="10" name='difficulty' defaultValue={difficulty} onChange={changeDifficulty} style={rangeStyles} />
